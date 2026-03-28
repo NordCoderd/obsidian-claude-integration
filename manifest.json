@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-claude-integration",
+  "name": "Obsidian Claude Code Integration",
+  "version": "0.0.1",
+  "minAppVersion": "1.0.0",
+  "description": "Minimalistic plugin to connect Claude Code to Obsidian",
+  "author": "Dmitry Protsenko",
+  "isDesktopOnly": true
+}

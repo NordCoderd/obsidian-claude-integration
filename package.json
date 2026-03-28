@@ -1,0 +1,29 @@
+{
+  "name": "obsidian-claude-integration",
+  "version": "0.0.1",
+  "description": "Minimalistic plugin to connect Claude Code to Obsidian as IDE",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production",
+    "deploy": "node esbuild.config.mjs production && node scripts/deploy.mjs",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "dependencies": {
+    "obsidian": "latest",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@codemirror/state": "^6.6.0",
+    "@codemirror/view": "^6.40.0",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.5.0",
+    "dotenv": "^17.3.1",
+    "esbuild": "^0.27.4",
+    "eslint": "^10.1.0",
+    "eslint-plugin-obsidianmd": "^0.1.9",
+    "obsidian": "latest",
+    "typescript": "^5.0.0"
+  }
+}
