@@ -1,7 +1,7 @@
 {
   "name": "minimalistic-claude-integration",
   "version": "1.0.0",
-  "description": "Minimalistic plugin for Claude Code connection",
+  "description": "Minimalistic plugin for Claude Code connection.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",

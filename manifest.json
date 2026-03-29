@@ -3,7 +3,7 @@
   "name": "Minimalistic Claude Code Integration",
   "version": "1.0.0",
   "minAppVersion": "1.0.0",
-  "description": "Minimalistic plugin for Claude Code connection",
+  "description": "Minimalistic plugin for Claude Code connection.",
   "author": "Dmitry Protsenko",
   "authorUrl": "https://protsenko.dev",
   "isDesktopOnly": true
