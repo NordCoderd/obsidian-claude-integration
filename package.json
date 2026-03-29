@@ -1,6 +1,6 @@
 {
   "name": "obsidian-claude-integration",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Minimalistic plugin to connect Obsidian to Claude Code",
   "main": "main.js",
   "scripts": {
