@@ -68,7 +68,7 @@ export class ClaudeSettingTab extends PluginSettingTab {
       .addButton((btn) => {
         btn
           .setIcon("folder-open")
-          .setTooltip("Browse for Claude CLI executable")
+          .setTooltip("Browse for claude executable")
           .onClick(async () => {
             if (!("electron" in window)) {
               showNotice("File browser is only available in the desktop app.");
@@ -76,7 +76,7 @@ export class ClaudeSettingTab extends PluginSettingTab {
             }
             const result = await (window as unknown as ElectronWindow).electron.remote.dialog.showOpenDialog({
               properties: ["openFile"],
-              title: "Select Claude CLI executable",
+              title: "Select claude code executable",
             });
             if (!result.canceled && result.filePaths.length > 0) {
               const chosen = result.filePaths[0];

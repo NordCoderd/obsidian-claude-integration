@@ -50,38 +50,43 @@ export class ClaudeServer {
   async start(): Promise<void> {
     this.authToken = crypto.randomUUID() + "-" + crypto.randomUUID();
 
-    this.wss = new WebSocketServer({ host: "127.0.0.1", port: 0 });
+    await new Promise<void>((resolve, reject) => {
+      this.wss = new WebSocketServer({ host: "127.0.0.1", port: 0 });
 
-    this.wss.on("connection", (ws: WebSocket, req) => {
-      console.debug(`Claude Code Sync: client connected from ${req.socket.remoteAddress}`);
-      this.clients.add(ws);
+      this.wss.on("connection", (ws: WebSocket, req) => {
+        console.debug(`Claude Code Sync: client connected from ${req.socket.remoteAddress}`);
+        this.clients.add(ws);
 
-      ws.on("message", (data: Buffer) => {
-        const raw = data.toString();
-        console.debug("Claude Code Sync: ← received", raw);
-        try {
-          const msg = JSON.parse(raw) as { id: unknown; method: string; params: unknown };
-          this.handleMessage(ws, msg);
-        } catch (e) {
-          console.error("Claude Code Sync: parse error", e);
-        }
+        ws.on("message", (data: Buffer) => {
+          const raw = data.toString();
+          console.debug("Claude Code Sync: ← received", raw);
+          try {
+            const msg = JSON.parse(raw) as { id: unknown; method: string; params: unknown };
+            this.handleMessage(ws, msg);
+          } catch (e) {
+            console.error("Claude Code Sync: parse error", e);
+          }
+        });
+
+        ws.on("close", (code, reason) => {
+          console.debug(`Claude Code Sync: client disconnected (code=${code} reason=${String(reason)})`);
+          this.clients.delete(ws);
+        });
+
+        ws.on("error", (err) => {
+          console.error("Claude Code Sync: ws error", err);
+          this.clients.delete(ws);
+        });
       });
 
-      ws.on("close", (code, reason) => {
-        console.debug(`Claude Code Sync: client disconnected (code=${code} reason=${String(reason)})`);
-        this.clients.delete(ws);
+      this.wss.on("listening", () => {
+        this._port = (this.wss!.address() as { port: number }).port;
+        console.debug(`Claude Code Sync: MCP server listening on port ${this._port}`);
+        this.writeLockFile();
+        resolve();
       });
 
-      ws.on("error", (err) => {
-        console.error("Claude Code Sync: ws error", err);
-        this.clients.delete(ws);
-      });
-    });
-
-    this.wss.on("listening", () => {
-      this._port = (this.wss!.address() as { port: number }).port;
-      console.debug(`Claude Code Sync: MCP server listening on port ${this._port}`);
-      this.writeLockFile();
+      this.wss.on("error", reject);
     });
   }
 
